@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>South of Fifth Market</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF5F8;--ink:#0E2A33;--deep:#0B3F48;--teal:#1B8A9C;--mute:#3F5966;--card:#fff;--chip:#D7E6EC;--line:#C6DAE3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink)}
+.wrap{max-width:1000px;margin:0 auto;background:var(--bg)}
+.hero{position:relative;height:600px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.hero img,.strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero img{object-position:center 70%}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,32,48,0) 30%,rgba(6,32,48,.9) 100%)}
+.hero .txt{position:relative;padding:0 64px 52px;color:#fff;display:flex;flex-direction:column;gap:12px}
+.kicker{font-size:15px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9FE0EA}
+h1{margin:0;font-size:64px;line-height:1.04;font-weight:800}
+.hero p{margin:0;font-size:22px;line-height:1.4;color:#E2F3F6;max-width:700px}
+.sec{padding:48px 64px 0;display:flex;flex-direction:column;gap:18px}
+h2{margin:0;font-size:32px;font-weight:800}
+.sub{font-size:17px;color:var(--mute)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{background:var(--card);border-radius:16px;padding:24px 20px;display:flex;flex-direction:column;gap:6px}
+.big{font-size:36px;font-weight:800;color:var(--deep)}
+.lbl{font-size:15px;color:var(--mute);line-height:1.35}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chips button{border:2px solid var(--teal);cursor:pointer;font:inherit;font-size:15px;font-weight:700;padding:10px 18px;min-height:44px;border-radius:999px;background:#fff;color:var(--deep)}
+.chips button.on{background:var(--teal);color:#fff}
+.panel{background:var(--card);border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:22px}
+.meter{height:22px;border-radius:11px;display:flex;overflow:hidden}
+.marker{position:relative;height:26px}
+.marker span{position:absolute;top:0;transform:translateX(-50%);transition:left .5s ease;font-size:20px;line-height:1;color:var(--deep)}
+.zones{display:flex;justify-content:space-between;font-size:14px;font-weight:600;color:var(--mute)}
+.note{font-size:15px;color:var(--mute);background:var(--bg);border-radius:12px;padding:14px 18px}
+.game{margin:48px 64px 0;background:var(--deep);color:#fff;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:22px}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.choices button{cursor:pointer;font:inherit;text-align:left;border:2px solid #3E7A86;background:transparent;color:#fff;border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:4px}
+.choices button.on{background:var(--teal);border-color:#6FD3E2}
+.result{background:#11525D;border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:18px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.rk{font-size:14px;font-weight:700;color:#9FE0EA;text-transform:uppercase;letter-spacing:.08em}
+.rv{font-size:44px;font-weight:800}
+.bar{height:16px;background:var(--deep);border-radius:8px;overflow:hidden}
+.bar div{height:16px;border-radius:8px;background:#6FD3E2;transition:width .6s ease}
+.bld{background:var(--card);border-radius:18px;padding:30px;display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:20px;align-items:center}
+.strip{margin-top:48px;position:relative;height:240px;overflow:hidden}
+.strip img{object-position:center 82%}
+.tips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tips .card{padding:24px;gap:8px}
+.tips h3{margin:0;font-size:22px;font-weight:800;color:var(--teal)}
+.tips p{margin:0;font-size:16px;line-height:1.45}
+.foot{margin-top:48px;padding:32px 64px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.src{font-size:12px;color:#4F6670;max-width:440px;line-height:1.45}
+.src a{color:#4F6670}
+[contenteditable]:focus{outline:2px dashed var(--teal);outline-offset:4px;border-radius:4px}
+@media (max-width:720px){
+ .hero{height:520px}.hero .txt{padding:0 16px 32px}h1{font-size:38px}.hero p{font-size:18px}
+ .sec{padding:36px 16px 0}h2{font-size:26px}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}.big{font-size:28px}
+ .panel{padding:22px}.game{margin:36px 16px 0;padding:22px}
+ .choices,.two,.tips{grid-template-columns:1fr}.rv{font-size:34px}
+ .bld{grid-template-columns:repeat(3,minmax(0,1fr));padding:22px}.bld .head{grid-column:1/-1}
+ .bld .big{font-size:24px}.strip{height:180px}.foot{padding:28px 16px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+<img src="hero.jpg" alt="South Pointe beach looking north toward South of Fifth condo buildings">
+<div class="shade"></div>
+<div class="txt">
+<div class="kicker">South of Fifth · October 2026</div>
+<h1>Buyers have room.<br>Smart sellers still win.</h1>
+<p>Priced right, condos here sold in about a month. Tap around to see where you fit.</p>
+</div>
+</div>
+
+<div class="sec">
+<div><h2>The last 12 months</h2><div class="sub">Condos south of 5th Street, beach side.</div></div>
+<div class="stats">
+<div class="card"><div class="big">$1.50M</div><div class="lbl">typical sale price</div></div>
+<div class="card"><div class="big">194</div><div class="lbl">condos sold</div></div>
+<div class="card"><div class="big">168</div><div class="lbl">for sale right now</div></div>
+<div class="card"><div class="big">86 days</div><div class="lbl">typical time to sell</div></div>
+</div>
+</div>
+
+<div class="sec">
+<div><h2>Who has the upper hand?</h2><div class="sub">Pick a price range.</div></div>
+<div class="chips" id="bands"></div>
+<div class="panel">
+<div class="row" style="align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:6px">
+<div id="bLabel" style="font-size:15px;font-weight:700;color:#1B8A9C;text-transform:uppercase;letter-spacing:.08em"></div>
+<div id="bVerdict" style="font-size:34px;font-weight:800"></div>
+<div id="bDetail" class="sub"></div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+<div id="bMoi" style="font-size:48px;font-weight:800;color:#0B3F48"></div>
+<div style="font-size:14px;color:#3F5966">months to sell out</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<div class="meter"><div style="width:25%;background:#2AA7B8"></div><div style="width:12.5%;background:#8DB9CF"></div><div style="width:62.5%;background:#0A2F5C"></div></div>
+<div class="marker"><span id="bPos">▲</span></div>
+<div class="zones"><div>Sellers win</div><div>Fair fight</div><div>Buyers win</div></div>
+</div>
+<div class="note"><span id="bCounts"></span> · "Months to sell out" = how long every condo for sale would take to sell if nothing new came on the market.</div>
+</div>
+</div>
+
+<div class="game">
+<div style="display:flex;flex-direction:column;gap:6px">
+<h2>Play seller: how would you price it?</h2>
+<div style="font-size:17px;color:#CFE8EE">Your condo is worth $1.50M. Pick a strategy and see what happened to sellers here last year.</div>
+</div>
+<div class="choices" id="choices">
+<button type="button" data-c="right" class="on"><span style="font-size:20px;font-weight:800">Price it right</span><span style="font-size:15px;color:#CFE8EE">List at what similar condos sold for</span></button>
+<button type="button" data-c="high"><span style="font-size:20px;font-weight:800">Aim high, cut later</span><span style="font-size:15px;color:#CFE8EE">List above, lower the price if it sits</span></button>
+</div>
+<div class="result">
+<div class="two">
+<div><div class="rk">You sell for</div><div class="rv" id="gNet"></div></div>
+<div><div class="rk">Time on the market</div><div class="rv" id="gTime"></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px"><div class="bar"><div id="gBar"></div></div><div style="font-size:14px;color:#CFE8EE">Time on the market, out of 7 months</div></div>
+<div id="gLesson" style="font-size:17px;font-weight:700"></div>
+</div>
+</div>
+
+<div class="sec">
+<div><h2>Which buildings sell fastest?</h2><div class="sub">Tap a building.</div></div>
+<div class="chips" id="blds"></div>
+<div class="bld">
+<div class="head" style="display:flex;flex-direction:column;gap:6px"><div id="dName" style="font-size:26px;font-weight:800;color:#0B3F48"></div><div id="dSpeed" style="font-size:17px;font-weight:700"></div></div>
+<div><div class="big" id="dSold"></div><div class="lbl">sold last year</div></div>
+<div><div class="big" id="dActive"></div><div class="lbl">for sale now</div></div>
+<div><div class="big" id="dPrice"></div><div class="lbl">typical sale price</div></div>
+</div>
+<div style="font-size:15px;color:#3F5966">Continuum and Yacht Club at Portofino had the most sales. Ocean views sold for 67% more per square foot.</div>
+</div>
+
+<div class="strip"><img src="hero.jpg" alt="Waves along South Pointe beach"></div>
+
+<div class="sec" style="padding-top:40px">
+<h2>What it means for you</h2>
+<div class="tips">
+<div class="card"><h3>Thinking of selling?</h3><p>Price at recent sales. Condos listed high sat 6 months and sold 14% below their first price.</p></div>
+<div class="card"><h3>Thinking of buying?</h3><p>You have choices. 1 in 4 sellers already cut their price, and 50 condos have sat 6+ months.</p></div>
+<div class="card"><h3>Happy where you are?</h3><p>Prices held steady this year. 8 in 10 buyers paid cash, so rates matter little here.</p></div>
+</div>
+</div>
+
+<div class="foot">
+<div style="display:flex;flex-direction:column;gap:4px">
+<div contenteditable="true" spellcheck="false" style="font-size:20px;font-weight:800">Emma Ballestas</div>
+<div contenteditable="true" spellcheck="false" style="font-size:16px;color:#3F5966">786.503.3230 · emmavballestas@gmail.com</div>
+</div>
+<div class="src">Source: Miami Realtors MLS, condos south of 5th St (33139). Sales Oct 2025 – Oct 2026; listings as of Oct 19, 2026. Typical = median. Photo: Dough4872, <a href="https://commons.wikimedia.org/wiki/File:Miami_Beach_from_South_Pointe_Park_Pier.jpeg">Wikimedia Commons</a>, CC BY-SA 4.0.</div>
+</div>
+
+</div>
+<script>
+(function(){
+var bands=[['Under $500K',46,40],['$500K–$1M',29,33],['$1M–$1.5M',24,23],['$1.5M–$2M',12,16],['$2M–$3M',17,23],['$3M–$5M',21,24],['$5M+',19,35]];
+var game={price:1500000,right:[0.943,1.1,'About 1 month'],high:[0.858,6,'About 6 months']};
+var blds=[['South Pointe Towers',15,5,1475000],['The Cosmopolitan',7,3,689575],['Murano at Portofino',9,2,4200000],['Apogee',6,1,13200000],['Continuum',25,18,5000000],['Yacht Club at Portofino',21,13,950000],['ICON South Beach',10,6,3305000],['Murano Grande',10,7,2612500],['Portofino Tower',14,11,3100000],['Ocean Point',11,10,400000]];
+var st={band:3,bld:0,choice:'right'};
+function $(id){return document.getElementById(id)}
+function money(v){return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':'$'+Math.round(v/1000)+'K'}
+function judge(moi){
+ if(moi<6)return['Sellers win','Few choices for buyers, and condos go fast.','#1B8A9C'];
+ if(moi<=9)return['Fair fight','Neither side has a big edge.','#4F7F99'];
+ return['Buyers win','Lots of choices and room to negotiate.','#0A2F5C'];
+}
+function chips(el,items,sel,onpick){
+ el.innerHTML='';
+ items.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.textContent=t;if(i===sel)b.className='on';b.onclick=function(){onpick(i)};el.appendChild(b)});
+}
+function render(){
+ chips($('bands'),bands.map(function(b){return b[0]}),st.band,function(i){st.band=i;render()});
+ var b=bands[st.band],moi=b[1]/(b[2]/12),j=judge(moi);
+ $('bLabel').textContent=b[0];$('bVerdict').textContent=j[0];$('bVerdict').style.color=j[2];$('bDetail').textContent=j[1];
+ $('bMoi').textContent=moi.toFixed(1);$('bPos').style.left=Math.max(1.5,Math.min(98.5,moi/24*100))+'%';
+ $('bCounts').textContent=b[1]+' for sale, '+b[2]+' sold last year';
+ var r=game[st.choice];
+ Array.prototype.forEach.call($('choices').children,function(c){c.className=c.getAttribute('data-c')===st.choice?'on':''});
+ $('gNet').textContent=money(game.price*r[0]);$('gTime').textContent=r[2];
+ $('gBar').style.width=Math.min(100,r[1]/7*100)+'%';
+ $('gLesson').textContent=st.choice==='right'?'Condos priced right sold in about a month, close to asking.':'Condos that started high sat for months and sold '+Math.round((1-r[0])*100)+'% below their first price.';
+ chips($('blds'),blds.map(function(x){return x[0]}),st.bld,function(i){st.bld=i;render()});
+ var x=blds[st.bld],bm=x[2]/(x[1]/12);
+ $('dName').textContent=x[0];$('dSold').textContent=x[1];$('dActive').textContent=x[2];$('dPrice').textContent=money(x[3]);
+ $('dSpeed').textContent=(bm<6?'Sells fast':bm<=9?'Steady':'Slow')+' · '+bm.toFixed(1)+' months to sell out';
+ $('dSpeed').style.color=bm<6?'#1B8A9C':bm<=9?'#4F7F99':'#0A2F5C';
+}
+Array.prototype.forEach.call($('choices').children,function(c){c.onclick=function(){st.choice=c.getAttribute('data-c');render()}});
+render();
+})();
+</script>
+</body>
+</html>
